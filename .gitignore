@@ -1,4 +1,4 @@
 # exclude everything
-folder/*
+public/*
 
 server.conf
