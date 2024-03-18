@@ -1,0 +1,4 @@
+# exclude everything
+folder/*
+
+server.conf
