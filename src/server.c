@@ -26,7 +26,6 @@ inline static void* new_client_instance(void* new_socket)
 {
     sig_atomic_t * client_socket_id = (int*) new_socket;
 
-
     char request[BUFF_MAX_RCV];
 
     // Read request
@@ -35,7 +34,7 @@ inline static void* new_client_instance(void* new_socket)
     if (bytes_recvd < 0)
     {
         fprintf(stderr, "Error receiving request %s\n", strerror(errno));
-        pthread_exit(NULL);
+        goto close_conn;
     }
 
     char *request_to_send = HTTP_RESPONSE_OK;
@@ -75,9 +74,14 @@ inline static void* new_client_instance(void* new_socket)
             request_to_send = HTTP_RESPONSE_404;
         }
     }
+    else {
+        fprintf(stderr, "Cannot read file %s\n", strerror(errno));
+    }
 
     write_ln_to_socket(*client_socket_id, request_to_send);
     write_content_to_socket(*client_socket_id, content);
+
+    goto close_conn;
 
     close_conn:
         free_uri(uri);

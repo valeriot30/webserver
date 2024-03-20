@@ -28,7 +28,7 @@ uri_t* create_uri(char *fullPath)
 
     if (uri == NULL)
     {
-        fprintf(stderr, "Error allocating URI data structure, %s", strerror(errno));
+        fprintf(stderr, "Error allocating URI data structure, %s\n", strerror(errno));
         return NULL;
     }
 
@@ -75,8 +75,6 @@ char *normalize_path(char *path_start, size_t len)
 
             strncpy(path, path_start + 1, path_length - 1);
             path[path_length] = '\0';
-
-            return (char *)path;
         }
     }
 
@@ -93,7 +91,7 @@ char *normalize_path(char *path_start, size_t len)
         strcat(path, "index");
     }
 
-    char *fullPath = strcat(path, ".html");
+    char *fullPath = strcmp(get_extension(path), ".html") ? strcat(path, ".html") : path;
 
     return fullPath;
 }
