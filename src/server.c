@@ -19,7 +19,7 @@ void write_content_to_socket(int sockfd, const char *content)
 void write_ln_to_socket(int sockfd, const char *message)
 {
     write(sockfd, message, strlen(message));
-    write(sockfd, "\r\n", 2);
+    write(sockfd, "\r\n", 2); // CRLF
 }
 
 inline static void* new_client_instance(void* new_socket)
@@ -75,7 +75,9 @@ inline static void* new_client_instance(void* new_socket)
         }
     }
     else {
-        fprintf(stderr, "Cannot read file %s\n", strerror(errno));
+        #ifdef FILE_DEBUG 
+            fprintf(stderr, "Cannot read file %s\n", strerror(errno));
+        #endif
     }
 
     write_ln_to_socket(*client_socket_id, request_to_send);

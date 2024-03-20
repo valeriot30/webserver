@@ -4,7 +4,7 @@
 
 int main(int argv, char** argc) {
 
-    t_config configfd;
+    t_config configfd = {0};
 
     int result = allocate_config_descriptor(&configfd);
 

@@ -11,6 +11,8 @@
 
 #define DEV_DEBUG 1
 
+#define FILE_DEBUG 0
+
 #define MAX_LINE_LENGTH 256
 
 // all keywords
