@@ -5,7 +5,7 @@
 
 #include "config.h"
 
-static void process_config_descriptor(t_config* configfd, char* key, char* value) {
+void process_config_descriptor(t_config* configfd, char* key, char* value) {
     if(strcmp(CONFIG_PORT, key) == 0) {
         (configfd)->port = atoi(value);
     }
@@ -17,7 +17,7 @@ static void process_config_descriptor(t_config* configfd, char* key, char* value
     }
 }
 
-void parseConfig(const char* filename, t_config* configfd ) 
+void parse_config(const char* filename, t_config* configfd ) 
 {
     FILE *file = fopen(filename, "r");
 
@@ -89,9 +89,7 @@ void* get_config_value(t_config* configfd, const char* config_key){
 }
 
 int allocate_config_descriptor(t_config* configfd) {
-    const char* filename = "server.conf";
-
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen(FILECONFIG_NAME, "r");
 
     if (file == NULL) {
         #ifdef DEV_DEBUG
@@ -99,7 +97,7 @@ int allocate_config_descriptor(t_config* configfd) {
         #endif
         return -1;
     }
-    parseConfig(filename, configfd);
+    parse_config(FILECONFIG_NAME, configfd);
 
     fclose(file);
 

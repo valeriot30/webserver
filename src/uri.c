@@ -22,7 +22,7 @@ char *get_extension(char *path)
     return extension;
 }
 
-uri_t* create_uri(char *fullPath)
+uri_t* create_uri(char *fullpath)
 {
     uri_t *uri = (uri_t *)malloc(sizeof(struct uri_struct));
 
@@ -32,16 +32,16 @@ uri_t* create_uri(char *fullPath)
         return NULL;
     }
 
-    if(fullPath == NULL) {
+    if(fullpath == NULL) {
         fprintf(stderr, "Error fullPath is NULL, %s \n", strerror(errno));
         return NULL;
     }
 
-    char* normalized = normalize_path(fullPath, sizeof(fullPath));
+    char* normalized = normalize_path(fullpath, sizeof(fullpath));
 
     uri->path = normalized != NULL ? normalized : ".";
-    uri->protocol = get_protocol(fullPath);
-    uri->extension = get_extension(fullPath);
+    uri->protocol = get_protocol(fullpath);
+    uri->extension = get_extension(fullpath);
 
     return uri;
 }

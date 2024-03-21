@@ -6,7 +6,7 @@ inline static void socket_term(int signum)
 {
     close(sd);
 }
-int create_client_socket(int socketFd, unsigned int port)
+int create_client_socket(unsigned int port)
 {
     struct sockaddr_in client_address;
     

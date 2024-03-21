@@ -15,6 +15,8 @@
 
 #define MAX_LINE_LENGTH 256
 
+#define FILECONFIG_NAME "server.conf"
+
 // all keywords
 static const char* CONFIG_HOST = "host"; 
 static const char* CONFIG_PORT = "port";

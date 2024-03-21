@@ -24,7 +24,7 @@ void write_ln_to_socket(int sockfd, const char *message)
 
 inline static void* new_client_instance(void* new_socket)
 {
-    sig_atomic_t * client_socket_id = (int*) new_socket;
+    sig_atomic_t* client_socket_id = (int*) new_socket;
 
     char request[BUFF_MAX_RCV];
 
@@ -106,7 +106,7 @@ int create_http_server(t_config configfd)
 
         sem_wait(&resources);
 
-        int new_socket = create_client_socket(sd, port);
+        int new_socket = create_client_socket(port);
 
         pthread_t id;
 

@@ -17,7 +17,7 @@ typedef struct uri_struct {
     char* extension;
 } uri_t;
 
-uri_t* create_uri(char* fullPath);
+uri_t* create_uri(char* fullpath);
 int free_uri(uri_t* uri);
 char* normalize_path(char* uri, size_t len);
 enum supported_protocol get_protocol(const char *path);

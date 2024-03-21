@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 struct buffer {
-    char*   content;
+    char    *content;
     int     len;
 };
 

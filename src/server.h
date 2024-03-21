@@ -24,7 +24,7 @@
 #define BUFF_MAX_SND 262144 // 256K 
 
 int create_http_server(t_config configfd);
-void write_ln_to_socket(int sockfd, const char* message);
+void write_ln_to_socket(int sockfd, const char *message);
 void write_content_to_socket(int sockfd, const char *content);
 
 #endif

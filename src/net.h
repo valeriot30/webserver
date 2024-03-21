@@ -13,6 +13,6 @@
 #include <signal.h>
 
 int create_server_socket(unsigned int port);
-int create_client_socket(int socketFd, unsigned int port);
+int create_client_socket(unsigned int port);
 
 #endif
