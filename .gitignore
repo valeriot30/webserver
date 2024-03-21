@@ -1,6 +1,8 @@
 # exclude everything
 public/*
 
+/.vscode/
+
 # exception to the rule
 !public/.gitkeep 
 
