@@ -14,20 +14,21 @@ cd webserver
 Ensure you have GCC (GNU Compiler Collection) installed on your system.
 gcc -o webserver webserver.c
 
-3. **Run the Server:**
+3. **Edit config:**
+Make sure you rename server.example.conf into server.example and fill up with your data
+
+4. **Run the Server:**
 Execute the provided bash script named `script.sh` to start the server.
 ./script.sh or sh script.sh
 
 
 This script compiles the server (if not already compiled) and runs it on the default port 8080.
 
-Edit settings in server.conf
-
 ## Usage
 
 Once the server is running, it will listen for incoming HTTP requests and using TCP transport protocol. You can access the server through a web browser or use tools like cURL to make requests.
 
-By default, the server serves files from the `public` directory. Place your HTML, CSS, JavaScript, or any other web content in this directory to be served by the server.
+By default, the server serves files from the `public` directory but feel free to change the root directory. Place your HTML, CSS, JavaScript, or any other web content in this directory to be served by the server.
 
 ## Additional Notes
 
