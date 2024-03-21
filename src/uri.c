@@ -50,7 +50,6 @@ int free_uri(uri_t *uri)
 {
     if (uri == NULL)
     {
-        fprintf(stderr, "Error deallocating URI data structure, %s", strerror(errno));
         return -1;
     }
 
