@@ -116,7 +116,7 @@ int create_http_server(t_config configfd)
         pthread_t id;
 
         pthread_create(&id, NULL, new_client_instance, (void*) &new_socket);
-        //pthread_join(id, NULL);
+        pthread_join(id, NULL);
 
         sem_post(&resources);
     }
