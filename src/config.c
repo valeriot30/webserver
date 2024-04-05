@@ -24,11 +24,12 @@ void parse_config(const char* filename, t_config* configfd )
     if(configfd == NULL) {
         fprintf(stderr, "Cannot allocate config descriptor for server %s", strerror(errno));
         exit(EXIT_FAILURE);
+        goto close_file;
     }
 
     if (file == NULL) {
         fprintf(stderr, "Error opening file");
-        exit(EXIT_FAILURE);
+        goto close_file;
     }
 
     char line[MAX_LINE_LENGTH];
@@ -72,6 +73,12 @@ void parse_config(const char* filename, t_config* configfd )
             }
         }
     }
+
+    goto close_file;
+
+    close_file:
+        fclose(file);
+        return;
 }
 
 void* get_config_value(t_config* configfd, const char* config_key){
@@ -95,6 +102,7 @@ int allocate_config_descriptor(t_config* configfd) {
         #ifdef DEV_DEBUG
             fprintf(stderr, "Error opening config file\n");
         #endif
+        fclose(file);
         return -1;
     }
     parse_config(FILECONFIG_NAME, configfd);

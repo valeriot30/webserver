@@ -1,7 +1,7 @@
 
 #include "server.h"
 
-sem_t resources = 1;
+sem_t resources;
 
 void write_content_to_socket(int sockfd, const char *content)
 {
@@ -86,6 +86,8 @@ inline static void* new_client_instance(void* new_socket)
     goto close_conn;
 
     close_conn:
+        // we flush buffer
+        free(content);
         free_uri(uri);
         close(*client_socket_id);
 
@@ -94,6 +96,9 @@ inline static void* new_client_instance(void* new_socket)
 
 int create_http_server(t_config configfd)
 {
+
+    sem_init(&resources, 1, 1);
+
     unsigned int port = configfd.port;
 
     fprintf(stdout, "Starting webserver on port %d\n", port);

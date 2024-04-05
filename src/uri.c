@@ -54,6 +54,7 @@ int free_uri(uri_t *uri)
     }
 
     free(uri->path);
+    free(uri);
 
     return 0;
 }
