@@ -6,7 +6,8 @@ while [ -n "$1" ]; do
 case "$1" in
     -o)  #!/bin/sh 
          ./bin/webserver;;
-    -v) valgrind ./bin/webserver;;
+    -v) 
+         valgrind   --leak-check=full --show-reachable=yes --track-origins=yes ./bin/webserver ;;
 esac
 shift
 done

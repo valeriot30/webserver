@@ -3,6 +3,10 @@
 
 sem_t resources;
 
+#ifdef __APPLE__
+    sem_t resources = 1;
+#endif
+
 void write_content_to_socket(int sockfd, const char *content)
 {
     char length_str[BUFF_MAX_SND];
@@ -97,7 +101,9 @@ inline static void* new_client_instance(void* new_socket)
 int create_http_server(t_config configfd)
 {
 
-    sem_init(&resources, 1, 1);
+    #ifndef __APPLE__
+        sem_init(&resources, 1, 1);
+    #endif
 
     unsigned int port = configfd.port;
 
