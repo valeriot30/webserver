@@ -35,6 +35,7 @@ By default, the server serves files from the `public` directory but feel free to
 ## Supported devices
 
 Every Linux Distribution and MacOS
+
 Not supported on Windows.
 
 ## Additional Notes
