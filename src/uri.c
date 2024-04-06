@@ -26,13 +26,14 @@ uri_t* create_uri(char *fullpath)
 {
     uri_t *uri = (uri_t *)malloc(sizeof(struct uri_struct));
 
-    if (uri == NULL)
+    if (uri == NULL) 
     {
         fprintf(stderr, "Error allocating URI data structure, %s\n", strerror(errno));
         return NULL;
     }
 
-    if(fullpath == NULL) {
+    if(fullpath == NULL) 
+    {
         fprintf(stderr, "Error fullPath is NULL, %s \n", strerror(errno));
         return NULL;
     }
@@ -48,12 +49,15 @@ uri_t* create_uri(char *fullpath)
 
 int free_uri(uri_t *uri)
 {
-    if (uri == NULL)
+    if (uri == NULL) 
     {
         return -1;
     }
 
-    free(uri->path);
+    if(uri != NULL) 
+    {
+        free(uri->path);
+    }
     free(uri);
 
     return 0;
