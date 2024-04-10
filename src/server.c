@@ -7,7 +7,6 @@ sem_t resources;
     sem_t resources = 1;
 #endif
 
-
 void write_content_to_socket(int sockfd, const char *content, const char* mime_type)
 {
     char length_str[BUFF_MAX_SND];
@@ -16,13 +15,15 @@ void write_content_to_socket(int sockfd, const char *content, const char* mime_t
 
     char *content_length_str = str_safe_concat(RESPONSE_CONTENT_LENGTH, length_str);
     char *content_type = str_safe_concat(RESPONSE_CONTENT_TYPE, mime_type);
-    write_ln_to_socket(sockfd, "Server: WebServer/1.0 (MacOS)");
+    char* content_server = str_safe_concat(SERVER_PRODUCT_NAME, get_hostname_os());
+    write_ln_to_socket(sockfd, content_server);
     write_ln_to_socket(sockfd, content_type);
     write_ln_to_socket(sockfd, content_length_str);
     write_ln_to_socket(sockfd, "");
     write_ln_to_socket(sockfd, content);
 
     free(content_length_str);
+    free(content_server);
     free(content_type);
 }
 
