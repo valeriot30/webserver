@@ -15,11 +15,15 @@ char *get_extension(char *path)
     // If there's no period in the path or it's at the end of the string, there's no extension
     if (extension == NULL || extension == path)
     {
-        return ""; // Return an empty string to indicate no extension
+        return NULL; // Return an empty string to indicate no extension
     }
 
     // Return a pointer to the character following the period (the extension)
     return extension;
+}
+
+static bool has_extension(char* path) {
+    return get_extension(path) != NULL;
 }
 
 uri_t* create_uri(char *fullpath)
@@ -95,9 +99,7 @@ char *normalize_path(char *path_start, size_t len)
         strcat(path, "index");
     }
 
-    char *fullPath = strcmp(get_extension(path), ".html") ? strcat(path, ".html") : path;
-
-    return fullPath;
+    return has_extension(path) ? path : strcat(path, ".html");
 }
 
 enum supported_protocol get_protocol(const char *path)

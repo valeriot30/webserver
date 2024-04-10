@@ -4,6 +4,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdlib.h"
+#include "stdbool.h"
 #include <errno.h>
 
 typedef enum supported_protocol {
@@ -21,7 +22,6 @@ uri_t* create_uri(char* fullpath);
 int free_uri(uri_t* uri);
 char* normalize_path(char* uri, size_t len);
 enum supported_protocol get_protocol(const char *path);
-int has_extension(uri_t uri);
 char* get_full_path(uri_t* uri);
 
 #endif
