@@ -28,9 +28,6 @@
 #define _STRINGIFY(x) #x
 #define STRINGIFY(x) _STRINGIFY(x)
 
-#define RESPONSE_CONTENT_TYPE "Content-Type: "
-#define RESPONSE_CONTENT_LENGTH "Content-Length: "
-
 int create_http_server(t_config configfd);
 void write_ln_to_socket(int sockfd, const char *message);
 void write_content_to_socket(int sockfd, const char *content, const char* mime_type);
