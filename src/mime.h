@@ -16,7 +16,7 @@
 
 #define MIME_TYPE_HTML "text/html"
 
-#define MIME_TYPE_DEFAULT MIME_TYPE_HTML
+#define MIME_TYPE_DEFAULT "application/octet-stream"
 
 #define MIME_TYPE_CSS "text/css"
 #define MIME_TYPE_JSON "application/json"
