@@ -25,7 +25,11 @@
 #define BUFF_MAX_RCV 65536 // 64K
 #define BUFF_MAX_SND 262144 // 256K 
 
-#define CONTENT_TYPE(x) "Content-Type: " #x
+#define _STRINGIFY(x) #x
+#define STRINGIFY(x) _STRINGIFY(x)
+
+#define RESPONSE_CONTENT_TYPE "Content-Type: "
+#define RESPONSE_CONTENT_LENGTH "Content-Length: "
 
 int create_http_server(t_config configfd);
 void write_ln_to_socket(int sockfd, const char *message);

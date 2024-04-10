@@ -7,16 +7,16 @@ char* get_mime_from_type(char* extension) {
     }
 
     // O(n)
-    if(strcmp(extension, ".html")) {
+    if(strcmp(extension, ".html") == 0) {
             return MIME_TYPE_HTML;
     }
-    else if(strcmp(extension, ".css")) {
+    else if(strcmp(extension, ".css") == 0) {
             return MIME_TYPE_CSS;
     }
-    else if(strcmp(extension, ".png")) {
+    else if(strcmp(extension, ".png") == 0) {
             return MIME_TYPE_PNG;
     }
-    else if(strcmp(extension, ".json")) {
+    else if(strcmp(extension, ".json") == 0) {
         return MIME_TYPE_JSON;
     }
 
