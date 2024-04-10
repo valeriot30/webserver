@@ -23,5 +23,6 @@ int free_uri(uri_t* uri);
 char* normalize_path(char* uri, size_t len);
 enum supported_protocol get_protocol(const char *path);
 char* get_full_path(uri_t* uri);
+char *get_extension(char *path);
 
 #endif

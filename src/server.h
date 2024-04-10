@@ -20,12 +20,15 @@
 #include "buffer.h"
 #include "response.h"
 #include "uri.h"
+#include "mime.h"
 
 #define BUFF_MAX_RCV 65536 // 64K
 #define BUFF_MAX_SND 262144 // 256K 
 
+#define CONTENT_TYPE(x) "Content-Type: " #x
+
 int create_http_server(t_config configfd);
 void write_ln_to_socket(int sockfd, const char *message);
-void write_content_to_socket(int sockfd, const char *content);
+void write_content_to_socket(int sockfd, const char *content, const char* mime_type);
 
 #endif

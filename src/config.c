@@ -49,14 +49,16 @@ void parse_config(const char* filename, t_config* configfd )
         // Check if we are inside the webserver object
         if (strstr(line, "webserver: {") != NULL) {
             inside = 1;
-            if(DEV_DEBUG)
+             #ifdef DEV_CONFIG_FILE_DEBUG
                 printf("[config] Found webserver object\n");
+             #endif
 
             continue;
         } else if (inside && strstr(line, "}") != NULL) {
             inside = 0;
-            if(DEV_DEBUG)
+             #ifdef DEV_CONFIG_FILE_DEBUG
                 printf("[config] End of webserver object\n");
+             #endif  
 
             continue;
         }
@@ -68,7 +70,9 @@ void parse_config(const char* filename, t_config* configfd )
 
             // Remove leading and trailing whitespaces from key and value
             if (key != NULL && value != NULL) {
-                printf("[config] Key: %s, Value: %s\n", rtrim(key), rtrim(value));
+                #ifdef DEV_CONFIG_FILE_DEBUG
+                    printf("[config] Key: %s, Value: %s\n", rtrim(key), rtrim(value));
+                #endif
                 process_config_descriptor(configfd, key, value);
             }
         }

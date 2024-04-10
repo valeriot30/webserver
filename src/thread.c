@@ -21,7 +21,7 @@
 static int destroy_worker(worker_t* worker) {
     if(worker == NULL) return -1;
 
-    pthread_exit(worker->tid);
+    pthread_exit(NULL);
 
     free(worker);
 
