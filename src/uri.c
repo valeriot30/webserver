@@ -4,8 +4,11 @@ static void convert_to_lowercase(char *uri)
 {
 }
 
-char* get_full_path(uri_t* uri) {
-    return uri->path;
+char* get_full_path(uri_t* uri, char* dir) {
+    char* full = str_safe_concat("public/", uri->path);
+    return full;
+
+    //return uri->path;
 }
 
 char *get_extension(char *path)
@@ -94,7 +97,7 @@ char *normalize_path(char *path_start, size_t len)
 
     fprintf(stdout, "Path requested: %s\n", path);
 
-    if (path[strlen(path) - 1] == '/')
+    if (strlen(path) <= 0)
     {
         strcat(path, "index");
     }

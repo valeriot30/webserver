@@ -99,6 +99,10 @@ void* get_config_value(t_config* configfd, const char* config_key){
     return NULL;
 }
 
+char* get_root_dir(t_config config) {
+    return get_config_value(&config, CONFIG_ROOT_DIR);
+}
+
 int allocate_config_descriptor(t_config* configfd) {
     FILE *file = fopen(FILECONFIG_NAME, "r");
 

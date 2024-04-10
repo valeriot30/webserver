@@ -7,6 +7,8 @@
 #include "stdbool.h"
 #include <errno.h>
 
+#include "util.h"
+
 typedef enum supported_protocol {
     http,
     https
@@ -22,7 +24,15 @@ uri_t* create_uri(char* fullpath);
 int free_uri(uri_t* uri);
 char* normalize_path(char* uri, size_t len);
 enum supported_protocol get_protocol(const char *path);
-char* get_full_path(uri_t* uri);
+
+/**
+ * @brief Get the full path of a uri, adding a directory or a list of directories
+ * 
+ * @param uri 
+ * @param dir 
+ * @return char* full path composed
+ */
+char* get_full_path(uri_t* uri, char* dir);
 char *get_extension(char *path);
 
 #endif

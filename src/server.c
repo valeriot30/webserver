@@ -7,7 +7,7 @@ sem_t resources;
     sem_t resources = 1;
 #endif
 
-void write_content_to_socket(int sockfd, const char *content, const char* mime_type)
+void write_content_to_socket(int sockfd, const char *content, const char* mime_type, const long fileSize)
 {
     char length_str[BUFF_MAX_SND];
     memset(length_str, 0, sizeof length_str);
@@ -58,7 +58,7 @@ inline static void* new_client_instance(void* new_socket)
         goto close_conn;
     }
 
-    char *fullPath = get_full_path(uri);
+    char *fullPath = get_full_path(uri, DEFAULT_ROOT_DIR);
 
     if(fullPath == NULL)
         goto close_conn;
@@ -95,7 +95,7 @@ inline static void* new_client_instance(void* new_socket)
 
     write_ln_to_socket(*client_socket_id, request_to_send); // Request line
 
-    write_content_to_socket(*client_socket_id, content, get_mime_from_type(extension));
+    write_content_to_socket(*client_socket_id, content, get_mime_from_type(extension), 0);
 
     goto close_conn;
 

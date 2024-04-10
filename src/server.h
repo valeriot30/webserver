@@ -34,6 +34,7 @@
 
 #define SERVER_PRODUCT_NAME concat0("Server: WebServer/", VERSION)
 
+// since we support only macos and linux (for posix standard)
 static inline char* get_hostname_os() {
     #ifdef __APPLE__
         return "MacOS";
@@ -46,6 +47,6 @@ static inline char* get_hostname_os() {
 
 int create_http_server(t_config configfd);
 void write_ln_to_socket(int sockfd, const char *message);
-void write_content_to_socket(int sockfd, const char *content, const char* mime_type);
+void write_content_to_socket(int sockfd, const char *content, const char* mime_type, const long fileSize);
 
 #endif

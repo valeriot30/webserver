@@ -42,3 +42,10 @@ char* str_safe_concat(const char *s1, const char *s2)
 char** get_content_dir(char* name) {
     return NULL;
 }
+long get_file_size(FILE* fp) {
+    fseek(fp, 0L, SEEK_END);
+    long sz = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+
+    return sz;
+}

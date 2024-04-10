@@ -18,11 +18,14 @@
 #define MAX_LINE_LENGTH 256
 
 #define FILECONFIG_NAME "server.conf"
-
 // all keywords
 static const char* CONFIG_HOST = "host"; 
 static const char* CONFIG_PORT = "port";
 static const char* CONFIG_ROOT_DIR = "root";
+
+
+#define DEFAULT_ROOT_DIR "public"
+
 
 typedef struct config_descriptor {
     unsigned int port;
@@ -32,4 +35,5 @@ typedef struct config_descriptor {
 
 int allocate_config_descriptor(t_config* configfd);
 void* get_config_value(t_config* configfd, const char* config_key);
+char* get_root_dir(t_config config);
 #endif
