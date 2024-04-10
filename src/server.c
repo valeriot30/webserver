@@ -43,7 +43,7 @@ inline static void* new_client_instance(void* new_socket)
 
     if (bytes_recvd < 0)
     {
-        fprintf(stderr, "Error receiving request %s\n", strerror(errno));
+        fprintf(stderr, "[error] Error receiving request %s\n", strerror(errno));
         goto close_conn;
     }
 
@@ -53,7 +53,7 @@ inline static void* new_client_instance(void* new_socket)
     uri_t* uri = create_uri(path_start);  
 
     if(uri == NULL) {
-        fprintf(stderr, "Error allocating uri %s\n", strerror(errno));
+        fprintf(stderr, "[error] Error allocating uri %s\n", strerror(errno));
         goto close_conn;
     }
 
@@ -62,7 +62,7 @@ inline static void* new_client_instance(void* new_socket)
     if(fullPath == NULL)
         goto close_conn;
 
-    fprintf(stdout, "Serving static file: %s\n", fullPath);
+    fprintf(stdout, "[error] Serving static file: %s\n", fullPath);
 
     char *content = 0;
 
@@ -72,7 +72,7 @@ inline static void* new_client_instance(void* new_socket)
 
     if (!result)
     {
-        fprintf(stdout, "Couldn't find entry %s\n", fullPath);
+        fprintf(stdout, "[error] Couldn't find entry %s\n", fullPath);
 
         if (strcmp(fullPath, "index.html") == 0)
         {
@@ -93,8 +93,6 @@ inline static void* new_client_instance(void* new_socket)
     }
 
     write_ln_to_socket(*client_socket_id, request_to_send); // Request line
-
-    printf("mime: %s", extension);
 
     write_content_to_socket(*client_socket_id, content, get_mime_from_type(extension));
 
