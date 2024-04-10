@@ -15,6 +15,7 @@
 
 #include "config.h"
 #include "net.h"
+#include "thread.h"
 #include "config.h"
 #include "buffer.h"
 #include "response.h"

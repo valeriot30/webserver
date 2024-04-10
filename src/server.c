@@ -91,7 +91,6 @@ inline static void* new_client_instance(void* new_socket)
 
     close_conn:
         // we flush buffer
-        free(content);
         free_uri(uri);
         close(*client_socket_id);
 
@@ -108,6 +107,13 @@ int create_http_server(t_config configfd)
     unsigned int port = configfd.port;
 
     fprintf(stdout, "Starting webserver on port %d\n", port);
+
+    thread_pool_t pool;
+
+    if(!initialize_threadpool(&pool, 8)) 
+    {
+        fprintf(stderr, "Failed to initialize thread pool %s\n", strerror(errno));
+    }
 
     int sd = create_server_socket(port);
 
@@ -126,7 +132,9 @@ int create_http_server(t_config configfd)
 
         sem_post(&resources);
     }
-
+    
+    destroy_threadpool(&pool);
+    
     close(sd);
 
     return sd;
