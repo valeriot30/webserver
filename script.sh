@@ -4,7 +4,7 @@ gcc src/webserver.c src/thread.c src/util.c src/uri.c src/mime.c src/net.c src/c
 
 while [ -n "$1" ]; do
 case "$1" in
-    -o)  #!/bin/sh 
+    -e)  #!/bin/sh 
          ./bin/webserver;;
     -v) 
          valgrind   --leak-check=full --show-reachable=yes --track-origins=yes ./bin/webserver ;;
