@@ -12,6 +12,8 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
+#include "logger.h"
+
 int create_server_socket(unsigned int port);
 int create_client_socket(unsigned int port);
 

@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "util.h"
+#include "logger.h"
 
 #define DEV_DEBUG 1
 

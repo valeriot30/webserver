@@ -9,14 +9,14 @@ int main(int argv, char** argc) {
     int result = allocate_config_descriptor(&configfd);
 
     if(result == -1) {
-         fprintf(stderr, "Error allocating configuration resource [%s]\n", strerror(errno));
+         ERROR_LOG("Error allocating configuration resource [%s]", strerror(errno));
          return -1;
     }
 
     int sd = create_http_server(configfd);
 
     if(sd == -1) {
-        fprintf(stderr, "Error creating http server %s\n", strerror(errno));
+        ERROR_LOG("Error creating http server %s\n", strerror(errno));
         return -1;
     }
 

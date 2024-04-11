@@ -8,6 +8,7 @@
 #include <errno.h>
 
 #include "util.h"
+#include "logger.h"
 
 typedef enum supported_protocol {
     http,

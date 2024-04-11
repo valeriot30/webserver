@@ -22,13 +22,13 @@ void parse_config(const char* filename, t_config* configfd )
     FILE *file = fopen(filename, "r");
 
     if(configfd == NULL) {
-        fprintf(stderr, "Cannot allocate config descriptor for server %s", strerror(errno));
+        ERROR_LOG("Cannot allocate config descriptor for server %s", strerror(errno));
         exit(EXIT_FAILURE);
         goto close_file;
     }
 
     if (file == NULL) {
-        fprintf(stderr, "Error opening file");
+        ERROR_LOG("Error opening file");
         goto close_file;
     }
 
@@ -50,14 +50,14 @@ void parse_config(const char* filename, t_config* configfd )
         if (strstr(line, "webserver: {") != NULL) {
             inside = 1;
              #ifdef DEV_CONFIG_FILE_DEBUG
-                printf("[config] Found webserver object\n");
+                INFO_LOG("[config] Found webserver object");
              #endif
 
             continue;
         } else if (inside && strstr(line, "}") != NULL) {
             inside = 0;
              #ifdef DEV_CONFIG_FILE_DEBUG
-                printf("[config] End of webserver object\n");
+                INFO_LOG("[config] End of webserver object");
              #endif  
 
             continue;
@@ -71,7 +71,7 @@ void parse_config(const char* filename, t_config* configfd )
             // Remove leading and trailing whitespaces from key and value
             if (key != NULL && value != NULL) {
                 #ifdef DEV_CONFIG_FILE_DEBUG
-                    printf("[config] Key: %s, Value: %s\n", rtrim(key), rtrim(value));
+                    INFO_LOG("[config] Key: %s, Value: %s", rtrim(key), rtrim(value));
                 #endif
                 process_config_descriptor(configfd, key, value);
             }
@@ -108,7 +108,7 @@ int allocate_config_descriptor(t_config* configfd) {
 
     if (file == NULL) {
         #ifdef DEV_DEBUG
-            fprintf(stderr, "Error opening config file\n");
+            ERROR_LOG("Error opening config file");
         #endif
         fclose(file);
         return -1;

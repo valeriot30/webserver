@@ -44,7 +44,7 @@ inline static void* new_client_instance(void* new_socket)
 
     if (bytes_recvd < 0)
     {
-        fprintf(stderr, "[error] Error receiving request %s\n", strerror(errno));
+        ERROR_LOG("[error] Error receiving request %s", strerror(errno));
         goto close_conn;
     }
 
@@ -54,7 +54,7 @@ inline static void* new_client_instance(void* new_socket)
     uri_t* uri = create_uri(path_start);  
 
     if(uri == NULL) {
-        fprintf(stderr, "[error] Error allocating uri %s\n", strerror(errno));
+        ERROR_LOG("[error] Error allocating uri %s", strerror(errno));
         goto close_conn;
     }
 
@@ -63,7 +63,7 @@ inline static void* new_client_instance(void* new_socket)
     if(fullPath == NULL)
         goto close_conn;
 
-    fprintf(stdout, "[error] Serving static file: %s\n", fullPath);
+    INFO_LOG("[error] Serving static file: %s", fullPath);
 
     char *content = 0;
 
@@ -73,7 +73,7 @@ inline static void* new_client_instance(void* new_socket)
 
     if (!result)
     {
-        fprintf(stdout, "[error] Couldn't find entry %s\n", fullPath);
+        INFO_LOG("[error] Couldn't find entry %s", fullPath);
 
         if (strcmp(fullPath, "index.html") == 0)
         {
@@ -89,7 +89,7 @@ inline static void* new_client_instance(void* new_socket)
     }
     else {
         #ifdef FILE_DEBUG 
-            fprintf(stderr, "[error] Cannot read file %s\n", strerror(errno));
+            ERROR_LOG("[error] Cannot read file %s", strerror(errno));
         #endif
     }
 
@@ -108,7 +108,7 @@ inline static void* new_client_instance(void* new_socket)
 }
 
 int create_http_server(t_config configfd)
-{
+{   
 
     #ifndef __APPLE__
         sem_init(&resources, 1, 1);
@@ -116,13 +116,13 @@ int create_http_server(t_config configfd)
 
     unsigned int port = configfd.port;
 
-    fprintf(stdout, "[server] Starting webserver on port %d\n", port);
+    INFO_LOG("[server] Starting webserver on port %d", port);
 
     thread_pool_t pool;
 
     if(!initialize_threadpool(&pool, 8)) 
     {
-        fprintf(stderr, "[error] Failed to initialize thread pool %s\n", strerror(errno));
+        ERROR_LOG("[error] Failed to initialize thread pool %s", strerror(errno));
     }
 
     int sd = create_server_socket(port);

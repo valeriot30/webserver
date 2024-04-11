@@ -24,11 +24,11 @@ int create_client_socket(unsigned int port)
 
     if (new_socket == -1)
     {
-        fprintf(stderr, "Error accepting socket on port %d [%s]\n", port, strerror(errno));
+        ERROR_LOG("Error accepting socket on port %d [%s]\n", port, strerror(errno));
         return -1;
     }
 
-    fprintf(stdout, "Started request connection on %d by %s\n", port, clientIP);
+    INFO_LOG("Started request connection on %d by %s", port, clientIP);
 
     return new_socket;
 }
@@ -47,7 +47,7 @@ int create_server_socket(unsigned int port)
 
     if (sd == -1)
     {
-        fprintf(stderr, "Error creating socket");
+        ERROR_LOG("Error creating socket");
         goto error;
     }
 
@@ -60,13 +60,13 @@ int create_server_socket(unsigned int port)
     int sock_enable_port_reuse = 1;
 
     if (setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &sock_enable_port_reuse, sizeof(int)) < 0)
-        fprintf(stderr, "setsockopt(SO_REUSEADDR) failed");
+        ERROR_LOG("setsockopt(SO_REUSEADDR) failed");
 
     b = bind(sd, (struct sockaddr *)&server_address, sizeof(server_address));
 
     if (b == -1)
     {
-        fprintf(stderr, "Error binding socket on port %d [%s]\n", port, strerror(errno));
+        ERROR_LOG("Error binding socket on port %d [%s]\n", port, strerror(errno));
         goto error;
     }
 

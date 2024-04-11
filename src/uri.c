@@ -35,13 +35,13 @@ uri_t* create_uri(char *fullpath)
 
     if (uri == NULL) 
     {
-        fprintf(stderr, "Error allocating URI data structure, %s\n", strerror(errno));
+        ERROR_LOG("Error allocating URI data structure, %s", strerror(errno));
         return NULL;
     }
 
     if(fullpath == NULL) 
     {
-        fprintf(stderr, "Error fullPath is NULL, %s \n", strerror(errno));
+        ERROR_LOG("Error fullPath is NULL, %s", strerror(errno));
         return NULL;
     }
 
@@ -91,11 +91,11 @@ char *normalize_path(char *path_start, size_t len)
 
     if (path == NULL)
     {
-        fprintf(stderr, "Error decoding path %s\n", strerror(errno));
+        ERROR_LOG("Error decoding path %s", strerror(errno));
         return NULL;
     }
 
-    fprintf(stdout, "Path requested: %s\n", path);
+    INFO_LOG("[server] Path requested: %s", path);
 
     if (strlen(path) <= 0)
     {

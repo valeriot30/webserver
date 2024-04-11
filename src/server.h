@@ -13,6 +13,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 
+#include "logger.h"
 #include "config.h"
 #include "net.h"
 #include "thread.h"
