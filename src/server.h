@@ -48,6 +48,6 @@ static inline char* get_hostname_os() {
 
 int create_http_server(t_config configfd);
 void write_ln_to_socket(int sockfd, const char *message);
-void write_content_to_socket(int sockfd, const char *content, const char* mime_type, const long fileSize);
+void write_response_to_socket(int sockfd, response_t* response);
 
 #endif

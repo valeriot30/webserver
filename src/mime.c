@@ -16,9 +16,16 @@ char* get_mime_from_type(char* extension) {
     else if(strcmp(extension, ".png") == 0) {
             return MIME_TYPE_PNG;
     }
+    else if(strcmp(extension, ".ico") == 0) {
+        return MIME_TYPE_ICO;
+    }
     else if(strcmp(extension, ".json") == 0) {
         return MIME_TYPE_JSON;
     }
 
     return MIME_TYPE_DEFAULT;
+}
+
+bool is_mime_text(char * mime_type) {
+    return !(strcmp(mime_type, MIME_TYPE_PNG) || strcmp(mime_type, MIME_TYPE_ICO));
 }
