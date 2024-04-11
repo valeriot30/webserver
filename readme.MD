@@ -21,6 +21,8 @@ Make sure you rename server.example.conf into server.example and fill up with yo
 Execute the provided bash script named `script.sh` to start the server.
 ./script.sh or sh script.sh
 
+Use flag -e to execute your code after compiling
+
 Use flag -v to debug with Valgrind (Linux only)
 
 
