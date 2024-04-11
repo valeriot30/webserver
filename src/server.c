@@ -19,8 +19,9 @@ void write_response_to_socket(int sockfd, response_t *response)
     write_ln_to_socket(sockfd, content_type);
     write_ln_to_socket(sockfd, content_length_str);
     
-    if(is_response_text(response))
+    if(is_response_text(response)) {
         write_ln_to_socket(sockfd, RESPONSE_ACCEPT_RANGE);
+    }
 
     write_ln_to_socket(sockfd, "");
     write_ln_to_socket(sockfd, content);
@@ -72,8 +73,6 @@ inline static void* new_client_instance(void* new_socket)
 
     // TODO can improve this by using only 1 pointer
     int result = get_content_from_file(fullPath, &content);
-    int file_size = get_file_size(fullPath);
-
     char* extension = get_extension(fullPath);
 
     if (!result)
@@ -101,15 +100,14 @@ inline static void* new_client_instance(void* new_socket)
     response_t *generated_response;
 
     char* mime_type = get_mime_from_type(extension);
-    bool is_text = false;
+    bool is_text = is_mime_text(mime_type);
 
-    int content_length = is_text ? strlen(content) : file_size;
+    int content_length = is_text ? strlen(content) : get_file_size(fullPath);
 
     if(alloc_response(&generated_response, content, mime_type, is_text, content_length, request_to_send) == -1) {
          ERROR_LOG("[error] Cannot compose a response %s", strerror(errno));
+         goto close_conn;
     }
-
-    INFO_LOG("file size: %d", file_size);
 
     write_ln_to_socket(*client_socket_id, request_to_send); // Request line
     write_response_to_socket(*client_socket_id, generated_response);
@@ -118,7 +116,7 @@ inline static void* new_client_instance(void* new_socket)
 
     close_conn:
         // we flush buffer
-        free_response(response);
+        free_response(generated_response);
         free_uri(uri);
         close(*client_socket_id);
 

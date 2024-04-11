@@ -27,5 +27,5 @@ char* get_mime_from_type(char* extension) {
 }
 
 bool is_mime_text(char * mime_type) {
-    return !(strcmp(mime_type, MIME_TYPE_PNG) || strcmp(mime_type, MIME_TYPE_ICO));
+    return !(strcmp(mime_type, MIME_TYPE_PNG) == 0 || strcmp(mime_type, MIME_TYPE_ICO) == 0);
 }

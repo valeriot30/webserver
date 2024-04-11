@@ -1,5 +1,6 @@
 #include "response.h"
 
+
 int alloc_response(response_t** response, char* content, char* mime_type, bool is_text, int content_length, char* response_line) {
 
     *response = (response_t*) malloc(sizeof(struct response));

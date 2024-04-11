@@ -44,11 +44,15 @@ char** get_content_dir(char* name) {
 }
 int get_file_size(char* name) {
 
-    FILE* fp = fopen(name, "r");
+    FILE* fp = fopen(name, "rb");
+
+    if(fp == NULL) return 1;
 
     fseek(fp, 0L, SEEK_END);
     long sz = ftell(fp);
     fseek(fp, 0L, SEEK_SET);
+
+    fclose(fp);
 
     return sz;
 }
