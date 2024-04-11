@@ -118,6 +118,7 @@ inline static void* new_client_instance(void* new_socket)
 
     close_conn:
         // we flush buffer
+        free_response(response);
         free_uri(uri);
         close(*client_socket_id);
 
