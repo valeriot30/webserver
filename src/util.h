@@ -6,8 +6,10 @@
 #include "stdlib.h"
 #include "unistd.h"
 #include "string.h"
-#include "dirent.h"
-#include "math.h"
+#include <dirent.h>
+#include <math.h>
+
+#include "base64.h"
 
 static inline int int2buffer(int x) {
     return (int)((ceil(log10(x))+1)*sizeof(char));
