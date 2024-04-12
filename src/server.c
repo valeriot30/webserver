@@ -117,13 +117,14 @@ inline static void* new_client_instance(void* new_socket)
          ERROR_LOG("[error] Cannot compose a response %s", strerror(errno));
          goto close_conn;
     }
-
+ 
     write_response_to_socket(*client_socket_id, generated_response);
 
     goto close_conn;
 
     close_conn:
         // we flush buffer
+        free(fullPath);
         free_response(generated_response);
         free_uri(uri);
         close(*client_socket_id);

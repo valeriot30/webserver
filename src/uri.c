@@ -5,7 +5,7 @@ static void convert_to_lowercase(char *uri)
 }
 
 char* get_full_path(uri_t* uri, char* dir) {
-    char* full = str_safe_concat("public/", uri->path);
+    char* full = str_safe_concat(dir, uri->path);
     return full;
 
     //return uri->path;

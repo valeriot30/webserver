@@ -25,7 +25,7 @@ static const char* CONFIG_PORT = "port";
 static const char* CONFIG_ROOT_DIR = "root";
 
 
-#define DEFAULT_ROOT_DIR "public"
+#define DEFAULT_ROOT_DIR "public/"
 
 
 typedef struct config_descriptor {

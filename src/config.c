@@ -37,8 +37,7 @@ void parse_config(const char* filename, t_config* configfd )
     // Flag to indicate when we are inside the webserver object
     int inside = 0;
 
-    while (fgets(line, sizeof(line), file) != NULL) 
-    {
+    while (fgets(line, sizeof(line), file) != NULL) {
         size_t len = strlen(line);
 
         // Remove newline character at the end of the line
