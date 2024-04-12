@@ -35,6 +35,11 @@ void write_response_to_socket(int sockfd, response_t *response)
     free(content_type);
 }
 
+
+/**
+ * TCP is a byte-stream protocol, so sending data individually is not affecting how the client (browser) is gonna receive the informations.
+ * Using only one big message is a waste of memory somehow.
+ */
 void write_ln_to_socket(int sockfd, const char *message, size_t len)
 {
     write(sockfd, message, strlen(message));
