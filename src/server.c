@@ -10,28 +10,32 @@ sem_t resources;
 void write_response_to_socket(int sockfd, response_t *response)
 {
     char *content_length_str = get_content_length_str(response);
+
+    char* response_line = get_response_line(response);
     
     char *content_type = get_response_mime_str(response);
     char* content_server = str_safe_concat(SERVER_PRODUCT_NAME, get_hostname_os());
     char* content = get_content_str(response);
 
-    write_ln_to_socket(sockfd, content_server);
-    write_ln_to_socket(sockfd, content_type);
-    write_ln_to_socket(sockfd, content_length_str);
+    write_ln_to_socket(sockfd, get_response_line(response), strlen(response_line)); // Request line
+
+    write_ln_to_socket(sockfd, content_server, strlen(content_server));
+    write_ln_to_socket(sockfd, content_type, strlen(content_server));
+    write_ln_to_socket(sockfd, content_length_str, strlen(content_length_str));
     
-    if(is_response_text(response)) {
-        write_ln_to_socket(sockfd, RESPONSE_ACCEPT_RANGE);
+    if(!is_response_text(response)) {
+        write_ln_to_socket(sockfd, RESPONSE_ACCEPT_RANGE, strlen(RESPONSE_ACCEPT_RANGE));
     }
 
-    write_ln_to_socket(sockfd, "");
-    write_ln_to_socket(sockfd, content);
+    write_ln_to_socket(sockfd, "", 1);
+    write_ln_to_socket(sockfd, content, strlen(content));
 
     free(content_length_str);
     free(content_server);
     free(content_type);
 }
 
-void write_ln_to_socket(int sockfd, const char *message)
+void write_ln_to_socket(int sockfd, const char *message, size_t len)
 {
     write(sockfd, message, strlen(message));
     write(sockfd, "\r\n", 2); // CRLF
@@ -109,7 +113,6 @@ inline static void* new_client_instance(void* new_socket)
          goto close_conn;
     }
 
-    write_ln_to_socket(*client_socket_id, request_to_send); // Request line
     write_response_to_socket(*client_socket_id, generated_response);
 
     goto close_conn;

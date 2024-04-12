@@ -25,7 +25,7 @@ int flush_content_from_buffer(char* buffer) {
 }
 
 int get_content_from_file(char* filename, char**buffer) {
-    long length;
+    int length;
 
     FILE * f = fopen (filename, "rb");
 

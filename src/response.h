@@ -13,7 +13,7 @@
 
 #define RESPONSE_CONTENT_TYPE "Content-Type: "
 #define RESPONSE_CONTENT_LENGTH "Content-Length: "
-#define RESPONSE_ACCEPT_RANGE "Accept-Range: bytes"
+#define RESPONSE_ACCEPT_RANGE "Accept-Ranges: bytes"
 
 enum response_result {
     ERROR_ALLOC_RESPONSE,
@@ -35,4 +35,5 @@ char* get_content_str(response_t* response);
 char* get_content_length_str(response_t* response);
 char* get_response_mime_type(response_t* response);
 bool is_response_text(response_t* response);
+char* get_response_line(response_t* response);
 #endif

@@ -14,6 +14,7 @@ int alloc_response(response_t** response, char* content, char* mime_type, bool i
     sprintf(length_str, "%d", (int)content_length);
 
     (*response)->content_length = length_str;
+    (*response)->is_text = is_text;
     (*response)->content = content;
     (*response)->mime_type = mime_type;
     (*response)->response_line = response_line;
@@ -23,6 +24,10 @@ int alloc_response(response_t** response, char* content, char* mime_type, bool i
 
 char* get_content_length_str(response_t* response) {
     return str_safe_concat(RESPONSE_CONTENT_LENGTH, response->content_length);
+}
+
+char* get_response_line(response_t* response) {
+    return response->response_line;
 }
 
 bool is_response_text(response_t* response) {

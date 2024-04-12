@@ -47,7 +47,7 @@ static inline char* get_hostname_os() {
 }
 
 int create_http_server(t_config configfd);
-void write_ln_to_socket(int sockfd, const char *message);
+void write_ln_to_socket(int sockfd, const char *message, size_t len);
 void write_response_to_socket(int sockfd, response_t* response);
 
 #endif
