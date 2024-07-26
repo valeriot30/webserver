@@ -1,3 +1,13 @@
+/*
+ * *********************************************************
+ * 
+ * @File: mime.c
+ * @File Created: Wednesday, 10th April 2024 10:27:39 pm
+ * @Author: Valerio Triolo
+ * *********************************************************
+ */
+
+
 #include "mime.h"
 
 char* get_mime_from_type(char* extension) {
@@ -22,10 +32,13 @@ char* get_mime_from_type(char* extension) {
     else if(strcmp(extension, ".json") == 0) {
         return MIME_TYPE_JSON;
     }
+    else if(strcmp(extension, ".webp") == 0) {
+        return MIME_TYPE_WEBP;
+    }
 
     return MIME_TYPE_DEFAULT;
 }
 
 bool is_mime_text(char * mime_type) {
-    return !(strcmp(mime_type, MIME_TYPE_PNG) == 0 || strcmp(mime_type, MIME_TYPE_ICO) == 0);
+    return strcmp(mime_type, MIME_TYPE_HTML) == 0 || strcmp(mime_type, MIME_TYPE_JSON) == 0;
 }

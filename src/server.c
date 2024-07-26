@@ -1,5 +1,18 @@
-#include "server.h"
+/*
+ * *********************************************************
+ * 
+ * File: server.c
+ * File Created: Saturday, 13th April 2024 3:38:16 pm
+ * Author: Valerio Triolo
+ * *********************************************************
+ * Last Modified: Friday, 24th May 2024 10:43:50 am
+ * Modified By: Valerio Triolo
+ * 
+ * *********************************************************
+ */
 
+
+#include "server.h"
 
 sem_t resources;
 
@@ -17,6 +30,8 @@ void write_response_to_socket(int sockfd, response_t *response)
     char* content_type = get_response_mime_str(response);
     char* content = get_content_str(response);
 
+    int content_length = get_content_length(response);
+
     write_ln_to_socket(sockfd, response_line, strlen(response_line)); // Request line
 
     write_ln_to_socket(sockfd, content_server, strlen(content_server));
@@ -28,7 +43,7 @@ void write_response_to_socket(int sockfd, response_t *response)
     }
 
     write_ln_to_socket(sockfd, "", 0);
-    write_ln_to_socket(sockfd, content, strlen(content));
+    write_ln_to_socket(sockfd, content, content_length);
 
     free(content_length_str);
     free(content_server);
@@ -110,7 +125,8 @@ inline static void* new_client_instance(void* new_socket)
 
     char* mime_type = get_mime_from_type(extension);
     bool is_text = is_mime_text(mime_type);
-
+    
+    //printf("is_text = %d" , is_text);
     int content_length = is_text ? strlen(content) : get_file_size(fullPath);
 
     if(alloc_response(&generated_response, content, mime_type, is_text, content_length, request_to_send) == -1) {

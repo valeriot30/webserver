@@ -1,3 +1,11 @@
+/*
+ * *********************************************************
+ * 
+ * @File: config.c
+ * @File Created: Sunday, 3rd March 2024 10:15:24 pm
+ * @Author: Valerio Triolo
+ * *********************************************************
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

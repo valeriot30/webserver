@@ -23,6 +23,7 @@
 #define MIME_TYPE_JSON "application/json"
 #define MIME_TYPE_PNG "image/png"
 #define MIME_TYPE_ICO "image/x-icon"
+#define MIME_TYPE_WEBP "image/webp"
 
 
 /**

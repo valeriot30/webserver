@@ -24,13 +24,15 @@ typedef struct response {
     char* content;
     bool is_text;
     char* mime_type;
-    char* content_length;
+    int content_length;
     char* response_line;
 } response_t;
 
 int alloc_response(response_t** response, char* content, char* mime_type, bool is_text, int content_length, char* response_line);
 int free_response(response_t* response);
 char* get_response_mime_str(response_t* response);
+char* get_content_length_as_string(response_t* response);
+int get_content_length(response_t* response);
 char* get_content_str(response_t* response);
 char* get_content_length_str(response_t* response);
 char* get_response_mime_type(response_t* response);
