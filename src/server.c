@@ -168,11 +168,6 @@ int create_http_server(t_config configfd)
 
     int sd = create_server_socket(port);
 
-    if(sd < 0) {
-        ERROR_LOG("[error] Failed to initialize server socket, exiting...");
-        return -1;
-    }
-
     while (1)
     {
         fflush(stdout);

@@ -47,8 +47,8 @@ int create_server_socket(unsigned int port)
 
     if (sd == -1)
     {
-        ERROR_LOG("Error creating socket");
-        goto error;
+        perror("socket failed");
+        exit(EXIT_FAILURE);
     }
 
     int b = 1;
@@ -60,7 +60,10 @@ int create_server_socket(unsigned int port)
     int sock_enable_port_reuse = 1;
 
     if (setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &sock_enable_port_reuse, sizeof(int)) < 0)
+    {
         ERROR_LOG("setsockopt(SO_REUSEADDR) failed");
+        exit(EXIT_FAILURE);
+    }
 
     b = bind(sd, (struct sockaddr *)&server_address, sizeof(server_address));
 
@@ -76,8 +79,10 @@ int create_server_socket(unsigned int port)
         goto error;
     }
 
+    int temp = sd;
+
     error:
         return -1;
 
-    return sd;
+    return temp;
 }
