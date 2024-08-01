@@ -103,7 +103,7 @@ inline static void* new_client_instance(void* new_socket)
     {
         INFO_LOG("[error] Couldn't find entry %s", fullPath);
 
-        if (strcmp(fullPath, "index.html") == 0)
+        if (strcmp(fullPath, "public/index.html") == 0)
         {
             // explore
             // get_content_dir(".");
@@ -183,9 +183,9 @@ int create_http_server(t_config configfd)
 
         sem_post(&resources);
     }
-    
+
     destroy_threadpool(&pool);
-    
+
     close(sd);
 
     return sd;
