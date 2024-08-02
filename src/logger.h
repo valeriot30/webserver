@@ -31,7 +31,6 @@ static inline char *timenow();
 #define ERROR_LOG(msg, args...) PRINTFUNCTION(LOG_FMT msg NEWLINE, LOG_ARGS(ERROR_TAG), ##args)
 
 
-
 static inline char *timenow() {
     static char buffer[64];
     time_t rawtime;
