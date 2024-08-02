@@ -34,6 +34,8 @@ char* get_mime_from_type(char* extension) {
     }
     else if(strcmp(extension, ".webp") == 0) {
         return MIME_TYPE_WEBP;
+    } else {
+        return MIME_TYPE_HTML;
     }
 
     return MIME_TYPE_DEFAULT;

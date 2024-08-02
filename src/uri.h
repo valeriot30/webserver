@@ -25,6 +25,7 @@ uri_t* create_uri(char* fullpath);
 int free_uri(uri_t* uri);
 char* normalize_path(char* uri, size_t len);
 enum supported_protocol get_protocol(const char *path);
+pid_t execute(const char *command, FILE **in, FILE **out, FILE **err);
 
 /**
  * @brief Get the full path of a uri, adding a directory or a list of directories

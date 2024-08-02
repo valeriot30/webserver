@@ -99,6 +99,15 @@ inline static void* new_client_instance(void* new_socket)
     int result = get_content_from_file(fullPath, &content);
     char* extension = get_extension(fullPath);
 
+    if(strcmp(extension, ".php") == 0) {
+        // php code detected
+
+        char* result = execute_php_script("-f", fullPath);
+
+        if(result != NULL)
+            strcpy(content, result);
+    }
+
     if (!result)
     {
         INFO_LOG("[error] Couldn't find entry %s", fullPath);
