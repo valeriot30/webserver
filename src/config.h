@@ -14,7 +14,7 @@
 
 #define DEV_CONFIG_FILE_DEBUG 0
 
-#define FILE_DEBUG 0
+#define FILE_DEBUG 1
 
 #define MAX_LINE_LENGTH 256
 

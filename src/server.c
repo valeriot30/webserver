@@ -122,7 +122,6 @@ static char* process_content(char* fullPath) {
         else
         {
             content = get_404_content();
-            return NULL;
         }
     }
     else {
@@ -170,7 +169,8 @@ inline static void* new_client_instance(void* new_socket)
 
     char *content = process_content(fullPath);
 
-    if(content == NULL) request_to_send = HTTP_RESPONSE_404;
+    if(content == NULL) 
+        request_to_send = HTTP_RESPONSE_404;
 
     response_t *generated_response;
 
