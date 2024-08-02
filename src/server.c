@@ -80,6 +80,19 @@ inline static char* decode_path(char* request, uri_t* uri) {
     return fullPath;
 }
 
+/**
+ * @brief Get the directory content if the server allows directory exploring
+ * 
+ * @return char* 
+ */
+static char* get_directory_content() {
+    return "<html>List of all directories</html>";
+}
+
+static char* get_404_content() {
+    return "<html>404 error</html>";
+}
+
 static char* process_content(char* fullPath) {
     char *content = 0;
 
@@ -104,11 +117,11 @@ static char* process_content(char* fullPath) {
         {
             // explore
             // get_content_dir(".");
-            content = "<html>List of all directories</html>";
+            content = get_directory_content();
         }
         else
         {
-            content = "<html>404 error</html>";
+            content = get_404_content();
             return NULL;
         }
     }
@@ -119,10 +132,17 @@ static char* process_content(char* fullPath) {
     }
 
     // probably this will be malloc'ed
-    return content;
+    return content; 
     
 }
 
+/**
+ * @brief Main function to elaborate a client request 
+ * a uri_t instance is generated based on request path, then a function decode_path translate the requested uri to the resource requested path.
+ * 
+ * @param new_socket 
+ * @return void* 
+ */
 inline static void* new_client_instance(void* new_socket)
 {
     sig_atomic_t* client_socket_id = (int*) new_socket;
