@@ -20,6 +20,12 @@ sem_t resources;
     sem_t resources = 1;
 #endif
 
+/**
+ * @brief Write a response_t object to socket based on sockfd
+ * 
+ * @param sockfd 
+ * @param response 
+ */
 void write_response_to_socket(int sockfd, response_t *response)
 {
     char *content_length_str = get_content_length_str(response);
@@ -61,38 +67,20 @@ void write_ln_to_socket(int sockfd, char *message, int len)
     send(sockfd, "\r\n", 2, 0); // CRLF
 }
 
-inline static void* new_client_instance(void* new_socket)
-{
-    sig_atomic_t* client_socket_id = (int*) new_socket;
-
-    char request[BUFF_MAX_RCV];
-
-    // Read request
-    int bytes_recvd = recv(*client_socket_id, request, BUFF_MAX_RCV - 1, 0);
-
-    if (bytes_recvd < 0)
-    {
-        ERROR_LOG("[error] Error receiving request %s", strerror(errno));
-        goto close_conn;
-    }
-
-    char *request_to_send = HTTP_RESPONSE_OK;
-    char *path_start = strstr(request, " ");
-
-    uri_t* uri = create_uri(path_start);  
-
+inline static char* decode_path(char* request, uri_t* uri) {
     if(uri == NULL) {
-        ERROR_LOG("[error] Error allocating uri %s", strerror(errno));
-        goto close_conn;
+        ERROR_LOG("[error] Error decoding uri %s", strerror(errno));
+        return NULL;
     }
 
     char *fullPath = get_full_path(uri, DEFAULT_ROOT_DIR);
 
-    if(fullPath == NULL)
-        goto close_conn;
-
     INFO_LOG("[error] Serving static file: %s", fullPath);
 
+    return fullPath;
+}
+
+static char* process_content(char* fullPath) {
     char *content = 0;
 
     // TODO can improve this by using only 1 pointer
@@ -121,7 +109,7 @@ inline static void* new_client_instance(void* new_socket)
         else
         {
             content = "<html>404 error</html>";
-            request_to_send = HTTP_RESPONSE_404;
+            return NULL;
         }
     }
     else {
@@ -130,7 +118,43 @@ inline static void* new_client_instance(void* new_socket)
         #endif
     }
 
+    // probably this will be malloc'ed
+    return content;
+    
+}
+
+inline static void* new_client_instance(void* new_socket)
+{
+    sig_atomic_t* client_socket_id = (int*) new_socket;
+
+    char request[BUFF_MAX_RCV];
+
+    // Read request
+    int bytes_recvd = recv(*client_socket_id, request, BUFF_MAX_RCV - 1, 0);
+
+    if (bytes_recvd < 0)
+    {
+        ERROR_LOG("[error] Error receiving request %s", strerror(errno));
+        goto close_conn;
+    }
+
+    char *request_to_send = HTTP_RESPONSE_OK;
+    char *path_start = strstr(request, " ");
+
+    uri_t* uri = create_uri(path_start);  
+
+    char *fullPath = decode_path(request, uri);
+
+    if(fullPath == NULL)
+        goto close_conn;
+
+    char *content = process_content(fullPath);
+
+    if(content == NULL) request_to_send = HTTP_RESPONSE_404;
+
     response_t *generated_response;
+
+    char* extension = get_extension(fullPath);
 
     char* mime_type = get_mime_from_type(extension);
     bool is_text = is_mime_text(mime_type);
@@ -187,6 +211,7 @@ int create_http_server(t_config configfd)
 
         pthread_t id;
 
+        // todo replace with pool->assign(task)
         pthread_create(&id, NULL, new_client_instance, (void*) &new_socket);
         pthread_join(id, NULL);
 
